@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industek | Servicio Integral de Mantenimiento Industrial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0:#0D1117;
+    --bg-1:#151B24;
+    --bg-2:#1E2732;
+    --bg-3:#26313D;
+    --line:rgba(0,194,209,0.16);
+    --line-strong:rgba(0,194,209,0.35);
+    --orange:#FF6A13;
+    --orange-dim:#B84F0F;
+    --cyan:#00C2D1;
+    --yellow:#FFC93C;
+    --text-0:#EEF2F6;
+    --text-1:#AEB9C7;
+    --text-2:#71808F;
+    --radius:2px;
+    --disp:'Oswald', sans-serif;
+    --body:'Inter', sans-serif;
+    --mono:'IBM Plex Mono', monospace;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg-0);
+    color:var(--text-0);
+    font-family:var(--body);
+    line-height:1.55;
+    overflow-x:hidden;
+    background-image:
+      repeating-linear-gradient(0deg, var(--line) 0px, transparent 1px, transparent 48px, var(--line) 49px),
+      repeating-linear-gradient(90deg, var(--line) 0px, transparent 1px, transparent 48px, var(--line) 49px);
+    background-attachment:fixed;
+  }
+  ::selection{background:var(--orange);color:#0D1117;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  img,svg{display:block;}
+  button{font-family:inherit;cursor:pointer;}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;}
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    display:flex;align-items:center;gap:.6em;
+    margin-bottom:1.1rem;
+  }
+  .eyebrow::before{content:'';width:22px;height:1px;background:var(--cyan);}
+
+  h1,h2,h3{
+    font-family:var(--disp);
+    text-transform:uppercase;
+    letter-spacing:.01em;
+    font-weight:600;
+    line-height:1.08;
+  }
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.2rem,4vw,2.5rem);}
+
+  /* corner bracket motif - CAD viewport frame */
+  .bracketed{position:relative;}
+  .bracketed::before,.bracketed::after{
+    content:'';position:absolute;width:18px;height:18px;
+    border-color:var(--line-strong);
+    pointer-events:none;
+  }
+  .bracketed::before{top:0;left:0;border-top:2px solid;border-left:2px solid;}
+  .bracketed::after{bottom:0;right:0;border-bottom:2px solid;border-right:2px solid;}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(13,17,23,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:0 clamp(1.2rem,4vw,2.5rem);
+    height:72px;display:flex;align-items:center;justify-content:space-between;
+  }
+  .logo{
+    font-family:var(--disp);font-size:1.35rem;font-weight:700;letter-spacing:.04em;
+    display:flex;align-items:center;gap:.5rem;
+  }
+  .logo .dot{
+    width:9px;height:9px;border-radius:50%;background:var(--orange);
+    box-shadow:0 0 0 3px rgba(255,106,19,.18);
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  .logo span.sub{
+    font-family:var(--mono);font-size:.62rem;color:var(--text-2);
+    letter-spacing:.14em;text-transform:uppercase;font-weight:400;margin-left:.3rem;
+  }
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 3px rgba(255,106,19,.18);}
+    50%{box-shadow:0 0 0 7px rgba(255,106,19,.05);}
+  }
+  nav.links{display:flex;gap:2.1rem;}
+  nav.links a{
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--text-1);position:relative;padding:.3rem 0;transition:color .2s;
+  }
+  nav.links a::after{
+    content:'';position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--orange);
+    transition:width .25s ease;
+  }
+  nav.links a:hover{color:var(--text-0);}
+  nav.links a:hover::after{width:100%;}
+  .nav-right{display:flex;align-items:center;gap:1.4rem;}
+  .social-mini{display:flex;gap:.85rem;}
+  .social-mini a{
+    width:30px;height:30px;border:1px solid var(--line-strong);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;color:var(--text-1);
+    transition:all .2s;
+  }
+  .social-mini a:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px);}
+  .social-mini svg{width:14px;height:14px;}
+  .burger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:.4rem;}
+  .burger span{width:22px;height:2px;background:var(--text-0);transition:.3s;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;min-height:100vh;display:flex;align-items:center;
+    padding:110px 0 60px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 78% 22%, rgba(0,194,209,.10), transparent 45%),
+               radial-gradient(circle at 15% 85%, rgba(255,106,19,.09), transparent 40%);
+    pointer-events:none;
+  }
+  .scanline{
+    position:absolute;left:0;right:0;height:2px;
+    background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity:.55;
+    animation:scan 6s linear infinite;
+    pointer-events:none;
+  }
+  @keyframes scan{
+    0%{top:0%;} 100%{top:100%;}
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.15fr .85fr;gap:3.5rem;align-items:center;
+    position:relative;z-index:1;
+  }
+  .hero h1{
+    font-size:clamp(2.4rem,5.2vw,4.1rem);
+    margin-bottom:1.3rem;
+  }
+  .hero h1 .accent{color:var(--orange);}
+  .hero p.lead{
+    color:var(--text-1);font-size:1.08rem;max-width:46ch;margin-bottom:2.2rem;
+  }
+  .cta-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.6rem;}
+  .btn{
+    font-family:var(--mono);font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;
+    padding:.95rem 1.7rem;border-radius:var(--radius);position:relative;overflow:hidden;
+    display:inline-flex;align-items:center;gap:.6rem;transition:transform .2s, box-shadow .2s;
+    border:1px solid transparent;
+  }
+  .btn-primary{background:var(--orange);color:#0D1117;font-weight:600;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 26px -8px rgba(255,106,19,.55);}
+  .btn-ghost{border-color:var(--line-strong);color:var(--text-0);}
+  .btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px);}
+
+  .trustline{
+    display:flex;gap:1.6rem;flex-wrap:wrap;
+    font-family:var(--mono);font-size:.72rem;color:var(--text-2);letter-spacing:.04em;
+  }
+  .trustline b{color:var(--text-0);}
+
+  /* HMI panel */
+  .hmi{
+    background:var(--bg-1);border:1px solid var(--line-strong);border-radius:var(--radius);
+    padding:1.6rem;position:relative;
+  }
+  .hmi-head{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:.68rem;color:var(--text-2);letter-spacing:.12em;
+    text-transform:uppercase;margin-bottom:1.2rem;padding-bottom:.9rem;border-bottom:1px solid var(--line);
+  }
+  .hmi-head .live{display:flex;align-items:center;gap:.4rem;color:var(--cyan);}
+  .hmi-head .live::before{
+    content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);
+    animation:pulse2 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse2{0%,100%{opacity:1;}50%{opacity:.25;}}
+  .hmi-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;}
+  .hmi-cell{
+    background:var(--bg-2);padding:1rem .9rem;border-radius:var(--radius);
+    border-left:2px solid var(--cyan);
+  }
+  .hmi-cell .num{
+    font-family:var(--mono);font-size:1.7rem;font-weight:600;color:var(--text-0);
+    display:flex;align-items:baseline;gap:.15rem;
+  }
+  .hmi-cell .num small{font-size:.9rem;color:var(--orange);}
+  .hmi-cell .lbl{font-size:.68rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-top:.3rem;}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:7rem 0;position:relative;}
+  .sec-head{max-width:640px;margin-bottom:3.2rem;}
+  .sec-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem);}
+  .sec-head p{color:var(--text-1);margin-top:1rem;font-size:1rem;}
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.3rem;
+  }
+  .svc-card{
+    background:var(--bg-1);border:1px solid var(--line);padding:2rem 1.7rem;
+    border-radius:var(--radius);position:relative;transition:border-color .25s, transform .25s, box-shadow .25s;
+    padding-top:2.4rem;
+  }
+  .svc-card:hover{
+    border-color:var(--cyan);transform:translateY(-6px);
+    box-shadow:0 18px 40px -18px rgba(0,194,209,.35);
+  }
+  .svc-code{
+    font-family:var(--mono);font-size:.68rem;color:var(--text-2);letter-spacing:.1em;
+    position:absolute;top:1.1rem;right:1.3rem;
+  }
+  .svc-icon{
+    width:44px;height:44px;border-radius:50%;background:var(--bg-2);
+    display:flex;align-items:center;justify-content:center;margin-bottom:1.3rem;
+    border:1px solid var(--line-strong);color:var(--orange);
+  }
+  .svc-icon svg{width:22px;height:22px;}
+  .svc-card h3{font-size:1.15rem;letter-spacing:.02em;margin-bottom:.7rem;}
+  .svc-card p{color:var(--text-1);font-size:.92rem;margin-bottom:1.1rem;}
+  .svc-list{display:flex;flex-direction:column;gap:.5rem;}
+  .svc-list li{
+    font-family:var(--mono);font-size:.76rem;color:var(--text-1);
+    display:flex;gap:.55rem;align-items:flex-start;
+  }
+  .svc-list li::before{content:'▸';color:var(--cyan);}
+
+  /* ---------- PROCESS ---------- */
+  .process-line{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;position:relative;
+  }
+  .process-line::before{
+    content:'';position:absolute;top:26px;left:6%;right:6%;height:1px;
+    background:repeating-linear-gradient(90deg, var(--line-strong) 0 8px, transparent 8px 16px);
+  }
+  .step{position:relative;z-index:1;}
+  .step .n{
+    width:52px;height:52px;border-radius:50%;background:var(--bg-1);border:1px solid var(--line-strong);
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);color:var(--orange);
+    font-weight:600;margin-bottom:1.1rem;
+  }
+  .step h3{font-size:1rem;letter-spacing:.03em;margin-bottom:.5rem;}
+  .step p{color:var(--text-1);font-size:.88rem;}
+
+  /* ---------- WHY / ABOUT ---------- */
+  .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;}
+  .why-text p{color:var(--text-1);margin-bottom:1rem;}
+  .why-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .stat-box{
+    background:var(--bg-1);border:1px solid var(--line);padding:1.5rem;border-radius:var(--radius);
+    text-align:left;
+  }
+  .stat-box .num{font-family:var(--mono);font-size:2.1rem;color:var(--cyan);font-weight:600;}
+  .stat-box .lbl{font-size:.78rem;color:var(--text-2);margin-top:.3rem;text-transform:uppercase;letter-spacing:.04em;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:3rem;}
+  .contact-info h2{font-size:clamp(1.7rem,3vw,2.3rem);margin-bottom:1rem;}
+  .contact-info p{color:var(--text-1);margin-bottom:1.8rem;}
+  .info-row{
+    display:flex;gap:.9rem;margin-bottom:1.2rem;font-size:.92rem;color:var(--text-1);
+  }
+  .info-row svg{width:18px;height:18px;flex-shrink:0;color:var(--orange);margin-top:.15rem;}
+  .social-full{display:flex;gap:.9rem;margin-top:1.8rem;}
+  .social-full a{
+    width:42px;height:42px;border:1px solid var(--line-strong);border-radius:50%;
+    display:flex;align-items:center;justify-content:center;color:var(--text-1);transition:all .2s;
+  }
+  .social-full a:hover{border-color:var(--orange);color:var(--orange);transform:translateY(-3px);}
+  .social-full svg{width:18px;height:18px;}
+
+  form{background:var(--bg-1);border:1px solid var(--line);padding:2rem;border-radius:var(--radius);}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+  .field{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1rem;}
+  .field label{font-family:var(--mono);font-size:.7rem;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;}
+  .field input, .field select, .field textarea{
+    background:var(--bg-2);border:1px solid var(--line);color:var(--text-0);
+    padding:.8rem .9rem;border-radius:var(--radius);font-family:var(--body);font-size:.92rem;
+    transition:border-color .2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{border-color:var(--cyan);outline:none;}
+  .field textarea{resize:vertical;min-height:100px;}
+  form .btn{width:100%;justify-content:center;margin-top:.4rem;}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid var(--line);padding:3rem 0 2rem;
+  }
+  .foot-grid{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:2rem;margin-bottom:2rem;}
+  .foot-links{display:flex;gap:1.8rem;flex-wrap:wrap;}
+  .foot-links a{font-family:var(--mono);font-size:.78rem;color:var(--text-1);letter-spacing:.04em;text-transform:uppercase;}
+  .foot-links a:hover{color:var(--cyan);}
+  .foot-bottom{
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;
+    font-family:var(--mono);font-size:.72rem;color:var(--text-2);
+    padding-top:1.6rem;border-top:1px solid var(--line);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:920px){
+    nav.links{display:none;}
+    .burger{display:flex;}
+    .hero-grid{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .process-line{grid-template-columns:1fr 1fr;row-gap:2.2rem;}
+    .process-line::before{display:none;}
+    .form-row{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){
+    .process-line{grid-template-columns:1fr;}
+    .hmi-grid{grid-template-columns:1fr 1fr;}
+    .cta-row{flex-direction:column;}
+    .btn{width:100%;justify-content:center;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#inicio" class="logo"><span class="dot"></span>INDUSTEK<span class="sub">/ Mantenimiento Industrial</span></a>
+    <nav class="links">
+      <a href="#inicio">Inicio</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Proceso</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-right">
+      <div class="social-mini">
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94Z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9.98h4V21H3V9.98ZM9 9.98h3.84v1.5h.05c.53-1 1.85-2.06 3.81-2.06 4.08 0 4.83 2.68 4.83 6.17V21h-4v-4.93c0-1.18-.02-2.69-1.64-2.69-1.64 0-1.9 1.28-1.9 2.6V21H9V9.98Z"/></svg></a>
+        <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.81.48 3.51 1.32 4.98L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.78 14.02c-.24.68-1.4 1.31-1.93 1.35-.5.04-1 .24-3.35-.7-2.83-1.13-4.65-3.99-4.79-4.18-.14-.19-1.15-1.53-1.15-2.92 0-1.39.73-2.07 1-2.35.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.17-.3.37-.43.5-.14.14-.29.29-.12.57.17.28.75 1.24 1.61 2 1.11.99 2.04 1.3 2.32 1.44.28.14.44.12.6-.07.17-.19.71-.83.9-1.11.19-.28.38-.24.64-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.33.07.12.07.68-.17 1.35Z"/></svg></a>
+      </div>
+      <button class="burger" id="burger" aria-label="Abrir menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="inicio">
+  <div class="scanline"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Servicio integral de mantenimiento industrial</div>
+      <h1>Su planta no se detiene.<br><span class="accent">Nosotros tampoco.</span></h1>
+      <p class="lead">Industek diseña, ejecuta y sostiene programas de mantenimiento para empresas de manufactura: consultoría técnica, mano de obra especializada y productos de mantenimiento en un solo proveedor.</p>
+      <div class="cta-row">
+        <a href="#contacto" class="btn btn-primary">Solicitar diagnóstico</a>
+        <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+      </div>
+      <div class="trustline">
+        <span><b>+15</b> años operando</span>
+        <span><b>40+</b> plantas atendidas</span>
+        <span><b>24/7</b> soporte técnico</span>
+      </div>
+    </div>
+
+    <div class="hmi bracketed">
+      <div class="hmi-head">
+        <span>Panel de estado / Industek</span>
+        <span class="live">En línea</span>
+      </div>
+      <div class="hmi-grid">
+        <div class="hmi-cell">
+          <div class="num"><span class="counter" data-target="98.7" data-decimals="1">0</span><small>%</small></div>
+          <div class="lbl">Disponibilidad de planta</div>
+        </div>
+        <div class="hmi-cell">
+          <div class="num"><span class="counter" data-target="15">0</span><small>+</small></div>
+          <div class="lbl">Años de experiencia</div>
+        </div>
+        <div class="hmi-cell">
+          <div class="num"><span class="counter" data-target="40">0</span><small>+</small></div>
+          <div class="lbl">Plantas atendidas</div>
+        </div>
+        <div class="hmi-cell">
+          <div class="num"><span class="counter" data-target="24">0</span><small>/7</small></div>
+          <div class="lbl">Respuesta técnica</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SERVICIOS ================= -->
+<section id="servicios">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Menú de servicios</div>
+      <h2>Cuatro frentes, un solo proveedor</h2>
+      <p>Cubrimos todo el ciclo de mantenimiento de su operación: del diagnóstico a la ejecución, del personal a los repuestos.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="svc-card">
+        <span class="svc-code">SVC-01</span>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1.08-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1.08 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+        </div>
+        <h3>Mantenimiento integral</h3>
+        <p>Programas preventivos, correctivos y predictivos diseñados para la realidad de su línea de producción.</p>
+        <ul class="svc-list">
+          <li>Mantenimiento preventivo programado</li>
+          <li>Atención correctiva de emergencia</li>
+          <li>Monitoreo predictivo de activos críticos</li>
+        </ul>
+      </div>
+
+      <div class="svc-card">
+        <span class="svc-code">SVC-02</span>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </div>
+        <h3>Consultoría técnica</h3>
+        <p>Auditorías de confiabilidad y planes de mantenimiento a medida para reducir paradas no planificadas.</p>
+        <ul class="svc-list">
+          <li>Auditoría de activos y criticidad</li>
+          <li>Diseño de planes de confiabilidad</li>
+          <li>Indicadores y reportes de gestión</li>
+        </ul>
+      </div>
+
+      <div class="svc-card">
+        <span class="svc-code">SVC-03</span>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <h3>Mano de obra especializada</h3>
+        <p>Técnicos e ingenieros certificados, disponibles bajo demanda o en modalidad de destaque en planta.</p>
+        <ul class="svc-list">
+          <li>Técnicos certificados por especialidad</li>
+          <li>Personal a destaque en planta</li>
+          <li>Supervisión y control de HSE</li>
+        </ul>
+      </div>
+
+      <div class="svc-card">
+        <span class="svc-code">SVC-04</span>
+        <div class="svc-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 6.7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+        </div>
+        <h3>Venta de productos</h3>
+        <p>Repuestos, lubricantes, herramientas e insumos de mantenimiento con disponibilidad garantizada.</p>
+        <ul class="svc-list">
+          <li>Repuestos y componentes industriales</li>
+          <li>Lubricantes y consumibles técnicos</li>
+          <li>Herramientas e insumos de planta</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESO ================= -->
+<section id="proceso">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Cómo trabajamos</div>
+      <h2>Un proceso, cuatro etapas</h2>
+      <p>El mismo método disciplinado en cada planta, desde el primer diagnóstico hasta la mejora continua.</p>
+    </div>
+    <div class="process-line">
+      <div class="step">
+        <div class="n">01</div>
+        <h3>Diagnóstico</h3>
+        <p>Levantamiento del estado real de sus activos y de los riesgos operativos.</p>
+      </div>
+      <div class="step">
+        <div class="n">02</div>
+        <h3>Plan a medida</h3>
+        <p>Diseño del programa de mantenimiento preventivo y predictivo según criticidad.</p>
+      </div>
+      <div class="step">
+        <div class="n">03</div>
+        <h3>Ejecución</h3>
+        <p>Intervención con técnicos certificados, repuestos y protocolos de seguridad.</p>
+      </div>
+      <div class="step">
+        <div class="n">04</div>
+        <h3>Seguimiento</h3>
+        <p>Reportes de confiabilidad y ajustes continuos al plan de mantenimiento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= NOSOTROS ================= -->
+<section id="nosotros">
+  <div class="wrap why-grid">
+    <div class="why-text">
+      <div class="eyebrow">Por qué Industek</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:1.2rem;">Un solo aliado para toda la operación de mantenimiento</h2>
+      <p>Trabajamos con empresas de manufactura que no pueden permitirse paradas imprevistas. Por eso integramos consultoría, ejecución, personal y suministro en un mismo equipo, con protocolos de seguridad y trazabilidad en cada intervención.</p>
+      <p>Nuestros técnicos e ingenieros están certificados por especialidad y trabajamos bajo indicadores de disponibilidad y confiabilidad que se reportan a su equipo de planta.</p>
+      <a href="#contacto" class="btn btn-primary">Conversar con un especialista</a>
+    </div>
+    <div class="why-stats">
+      <div class="stat-box"><div class="num">40+</div><div class="lbl">Plantas atendidas</div></div>
+      <div class="stat-box"><div class="num">15+</div><div class="lbl">Años de experiencia</div></div>
+      <div class="stat-box"><div class="num">98.7%</div><div class="lbl">Disponibilidad lograda</div></div>
+      <div class="stat-box"><div class="num">24/7</div><div class="lbl">Soporte técnico</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACTO ================= -->
+<section id="contacto">
+  <div class="wrap contact-grid">
+    <div class="contact-info">
+      <div class="eyebrow">Contacto</div>
+      <h2>Hablemos de su planta</h2>
+      <p>Cuéntenos sobre su operación y le proponemos un plan de mantenimiento a medida.</p>
+
+      <div class="info-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+        <span>+51 999 999 999</span>
+      </div>
+      <div class="info-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6 12 13 2 6"/><path d="M2 6h20v12H2Z"/></svg>
+        <span>contacto@industek.pe</span>
+      </div>
+      <div class="info-row">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>Lima, Perú — atención a nivel nacional</span>
+      </div>
+
+      <div class="social-full">
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94Z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9.98h4V21H3V9.98ZM9 9.98h3.84v1.5h.05c.53-1 1.85-2.06 3.81-2.06 4.08 0 4.83 2.68 4.83 6.17V21h-4v-4.93c0-1.18-.02-2.69-1.64-2.69-1.64 0-1.9 1.28-1.9 2.6V21H9V9.98Z"/></svg></a>
+        <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.81.48 3.51 1.32 4.98L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.78 14.02c-.24.68-1.4 1.31-1.93 1.35-.5.04-1 .24-3.35-.7-2.83-1.13-4.65-3.99-4.79-4.18-.14-.19-1.15-1.53-1.15-2.92 0-1.39.73-2.07 1-2.35.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.17-.3.37-.43.5-.14.14-.29.29-.12.57.17.28.75 1.24 1.61 2 1.11.99 2.04 1.3 2.32 1.44.28.14.44.12.6-.07.17-.19.71-.83.9-1.11.19-.28.38-.24.64-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.33.07.12.07.68-.17 1.35Z"/></svg></a>
+      </div>
+    </div>
+
+    <form id="contactForm">
+      <div class="form-row">
+        <div class="field">
+          <label for="nombre">Nombre completo</label>
+          <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="field">
+          <label for="empresa">Empresa</label>
+          <input type="text" id="empresa" name="empresa" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div class="field">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" name="telefono">
+        </div>
+      </div>
+      <div class="field">
+        <label for="servicio">Servicio de interés</label>
+        <select id="servicio" name="servicio">
+          <option>Mantenimiento integral</option>
+          <option>Consultoría técnica</option>
+          <option>Mano de obra especializada</option>
+          <option>Venta de productos</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="mensaje">Cuéntenos sobre su planta</label>
+        <textarea id="mensaje" name="mensaje"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Enviar solicitud</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <a href="#inicio" class="logo"><span class="dot"></span>INDUSTEK</a>
+      <div class="foot-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="social-mini">
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.51 1.49-3.9 3.77-3.9 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.76 8.44-4.92 8.44-9.94Z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5A2.5 2.5 0 1 0 5 8.5a2.5 2.5 0 0 0-.02-5ZM3 9.98h4V21H3V9.98ZM9 9.98h3.84v1.5h.05c.53-1 1.85-2.06 3.81-2.06 4.08 0 4.83 2.68 4.83 6.17V21h-4v-4.93c0-1.18-.02-2.69-1.64-2.69-1.64 0-1.9 1.28-1.9 2.6V21H9V9.98Z"/></svg></a>
+        <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.81.48 3.51 1.32 4.98L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2Zm5.78 14.02c-.24.68-1.4 1.31-1.93 1.35-.5.04-1 .24-3.35-.7-2.83-1.13-4.65-3.99-4.79-4.18-.14-.19-1.15-1.53-1.15-2.92 0-1.39.73-2.07 1-2.35.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.14.12.31.02.5-.1.19-.15.31-.29.48-.14.17-.3.37-.43.5-.14.14-.29.29-.12.57.17.28.75 1.24 1.61 2 1.11.99 2.04 1.3 2.32 1.44.28.14.44.12.6-.07.17-.19.71-.83.9-1.11.19-.28.38-.24.64-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.33.07.12.07.68-.17 1.35Z"/></svg></a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Industek. Todos los derechos reservados.</span>
+      <span>Mantenimiento · Consultoría · Personal técnico · Productos industriales</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu toggle
+  const burger = document.getElementById('burger');
+  const links = document.querySelector('nav.links');
+  burger.addEventListener('click', () => {
+    const open = links.style.display === 'flex';
+    links.style.display = open ? 'none' : 'flex';
+    links.style.cssText += open ? '' : 'position:fixed;top:72px;left:0;right:0;background:#0D1117;flex-direction:column;padding:1.5rem 1.2rem;border-bottom:1px solid rgba(0,194,209,0.16);gap:1.2rem;';
+  });
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    if (window.innerWidth <= 920) links.style.display = 'none';
+  }));
+
+  // Counter animation
+  const counters = document.querySelectorAll('.counter');
+  const animateCounter = (el) => {
+    const target = parseFloat(el.dataset.target);
+    const decimals = parseInt(el.dataset.decimals || '0');
+    const duration = 1400;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = target * eased;
+      el.textContent = decimals ? val.toFixed(decimals) : Math.round(val);
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(e.target);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  counters.forEach(c => io.observe(c));
+
+  // Form submit (demo only — connect to your backend/email service)
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const btn = this.querySelector('button[type="submit"]');
+    const original = btn.textContent;
+    btn.textContent = 'Solicitud enviada ✓';
+    this.reset();
+    setTimeout(() => btn.textContent = original, 2500);
+  });
+</script>
+</body>
+</html>
